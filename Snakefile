@@ -1,7 +1,8 @@
 import os, glob
 RAW_DIR = config.get('raw_dir', 'data/raw')
-PROCESSED_DIR = config.get('processed_dir', 'data/processed')
-PLOT_DIR = config.get('plot_dir', 'plots')
+PROCESSED_DIR = config.get('processed_dir', 'data/processed_channels')
+PLOT_DIR = config.get('plot_dir', 'plots_channels')
+CHANNELS_FILE = config.get('channels_file', 'channels.txt')
 
 samples = [os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(RAW_DIR, '*.fcs'))]
 
@@ -16,5 +17,7 @@ rule process_fcs:
     output:
         fcs=os.path.join(PROCESSED_DIR, '{sample}_umap_clust.fcs'),
         plot=os.path.join(PLOT_DIR, '{sample}.png')
+    params:
+        channels_file=CHANNELS_FILE
     shell:
-        'Rscript {workflow.basedir}/scripts/process_fcs.R -i "{input}" -o "{output.fcs}" -p "{output.plot}"'
+        'Rscript {workflow.basedir}/scripts/process_fcs.R -i "{input}" -o "{output.fcs}" -p "{output.plot}" -c "{params.channels_file}"'
