@@ -11,3 +11,13 @@ dependencies:
   - r-ggplot2
   - r-uwot
   - r-optparse
+  - numpy
+  - pandas
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - umap-learn
+  - pip
+  - pip:
+      - FlowCal
+      - fcswrite
