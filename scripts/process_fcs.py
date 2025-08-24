@@ -25,7 +25,7 @@ def main():
         selected = channels_df.loc[channels_df["use"] == 1, "desc"].tolist()
         available_channels = ff.channel_labels()
         present = [ch for ch in selected if ch in available_channels]
-        indices = [available_channels.index(ch) for ch in present]
+        indices = [available_channels.index(ch) for ch in selected]
     else:
         available_channels = ff.channel_labels()
         indices = [i for i, desc in enumerate(available_channels) if
@@ -36,7 +36,7 @@ def main():
 
     umap_res = umap.UMAP(n_components=2).fit_transform(X_asinh)
 
-    km = KMeans(n_clusters=5, random_state=42).fit(X_asinh)
+    km = KMeans(n_clusters=5, random_state=42).fit(umap_res)
 
     new_data = np.hstack([expr, umap_res, km.labels_[:, None]])
 
