@@ -67,8 +67,5 @@ docker build -t fcs_pipeline .
 Run the pipeline using the image:
 
 ```bash
-docker run --rm -v $(pwd):/data -w /pipeline fcs_pipeline snakemake --cores 4
+docker run --rm -v $(pwd):/data -w /pipeline fcs_pipeline --cores 4
 ```
-
-The tests use an example FCS file distributed with `flowCore` and verify that
-the pipeline completes and creates the expected outputs.
